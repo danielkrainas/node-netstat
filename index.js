@@ -30,43 +30,49 @@ function normalizeValues (item) {
         item.local.address = '*';
     }
 
-    if (item.program == '-') {
-        item.program = null;
+    if (item.pid == '-') {
+        item.pid = 0;
     } else {
-        parts = item.program.split('/');
-        item.program = {
-            pid: parts.length == 2 ? parts[0] : 0,
-            name: parts[1] || parts[0] 
-        };
+        parts = item.pid.split('/');
+        item.pid = parts.length == 2 ? parts[0] : 0;
     }
 
     return item;
 }
 
 var parsers = {
-    linux: function (stdout, callback) {
-        stdout.on('line', function (line) {
-            var parts = line.split(/\s/).filter(String);
-            if (!parts.length || parts[0] != 'tcp' || parts.length != 7) {
-                return;
-            }
+    linux: function (line, callback) {
+        var parts = line.split(/\s/).filter(String);
+        if (!parts.length || parts.length != 7) {
+            return;
+        }
 
-            var item = {
-                protocol: parts[0],
-                sendq: parts[1],
-                recvq: parts[2],
-                local: parts[3],
-                remote: parts[4],
-                state: parts[5],
-                program: parts[6]
-            };
+        var item = {
+            protocol: parts[0],
+            local: parts[3],
+            remote: parts[4],
+            state: parts[5],
+            pid: parts[6]
+        };
 
-            callback(normalizeValues(item));
-        });
+        callback(normalizeValues(item));
     },
 
-    win32: function (stdout, callback) {
+    win32: function (line, callback) {
+        var parts = line.split(/\s/).filter(String);
+        if (!parts.length || parts.length != 5) {
+            return;
+        }
 
+        var item = {
+            protocol: parts[0],
+            local: parts[1],
+            remote: parts[2],
+            state: parts[3],
+            pid: parts[4]
+        };
+
+        callback(normalizeValues(item));
     }
 };
 
@@ -90,15 +96,17 @@ function emitLines (stream) {
     });
 }
 
-module.exports = exports = function (callback) {
+module.exports = exports = function (options, callback) {
     var platform = os.platform();
     var command = commands[platform];
     var parser = parsers[platform];
     if (!parser || !command) {
         throw new Error('platform is not supported.');
     }
-    
+
     var proc = spawn(command.cmd, command.args);
     emitLines(proc.stdout);
-    parser(proc.stdout, callback);
+    proc.stdout.on('line', function (line) {
+        parser(line, callback);
+    });
 };

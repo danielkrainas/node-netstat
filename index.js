@@ -43,7 +43,7 @@ function normalizeValues (item) {
 var parsers = {
     linux: function (line, callback) {
         var parts = line.split(/\s/).filter(String);
-        if (!parts.length || parts.length != 7) {
+        if (!parts.length || parts.length != 7 || parts[0] == 'tcp6') {
             return;
         }
 

@@ -94,6 +94,10 @@ module.exports = exports = function (callback) {
     var platform = os.platform();
     var command = commands[platform];
     var parser = parsers[platform];
+    if (!parser || !command) {
+        throw new Error('platform is not supported.');
+    }
+    
     var proc = spawn(command.cmd, command.args);
     emitLines(proc.stdout);
     parser(proc.stdout, callback);

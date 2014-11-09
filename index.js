@@ -12,29 +12,52 @@ var commands = {
     }
 };
 
+function parseAddress (raw) {
+    var port = null,
+        address = null;
+    if (raw[0] == '[') {
+        port = raw.substring(raw.lastIndexOf(':') + 1);
+        address = raw.substring(1, raw.indexOf(']'));
+    } else if (raw.indexOf(':') != raw.lastIndexOf(':')) {
+        port = raw.substring(raw.lastIndexOf(':') + 1);
+        address = raw.substring(0, raw.lastIndexOf(':'));
+    } else {
+        var parts = raw.split(':');
+        port = parts[1];
+        address = parts[0] || null;
+    }
+
+    if (address && (address == '::' || address == '0.0.0.0')) {
+        address = null;
+    }
+    
+    return {
+        port: port,
+        address: address
+    };
+}
+
 function normalizeValues (item) {
     item.protocol = item.protocol.toLowerCase();
     var parts = item.local.split(':');
-    item.local = {
-        address: parts[0],
-        port: parts[1] || null
-    };
-
-    parts = item.remote.split(':');
-    item.remote = {
-        address: parts[0],
-        port: parts[1] || null
-    };
-
-    if (item.local.address == '0.0.0.0') {
+    item.local = parseAddress(item.local);
+    item.remote = parseAddress(item.remote);
+    
+    /*if (!item.local.address) {
         item.local.address = '*';
+    }*/
+
+    if (item.protocol == 'tcp' && ~item.local.address.indexOf(':')) {
+        item.protocol = 'tcp6';
     }
 
     if (item.pid == '-') {
         item.pid = 0;
-    } else {
+    } else if (~item.pid.indexOf('/')) {
         parts = item.pid.split('/');
         item.pid = parts.length == 2 ? parts[0] : 0;
+    } else if (isNaN(item.pid)) {
+        item.pid = 0;
     }
 
     return item;
@@ -43,7 +66,7 @@ function normalizeValues (item) {
 var parsers = {
     linux: function (line, callback) {
         var parts = line.split(/\s/).filter(String);
-        if (!parts.length || parts.length != 7 || parts[0] == 'tcp6') {
+        if (!parts.length || parts.length != 7) {
             return;
         }
 
@@ -71,6 +94,8 @@ var parsers = {
             state: parts[3],
             pid: parts[4]
         };
+        
+        console.log(item);
 
         callback(normalizeValues(item));
     }

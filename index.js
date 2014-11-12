@@ -47,7 +47,7 @@ function normalizeValues (item) {
         item.local.address = '*';
     }*/
 
-    if (item.protocol == 'tcp' && ~item.local.address.indexOf(':')) {
+    if (item.protocol == 'tcp' && item.local.address && ~item.local.address.indexOf(':')) {
         item.protocol = 'tcp6';
     }
 
@@ -94,8 +94,6 @@ var parsers = {
             state: parts[3],
             pid: parts[4]
         };
-        
-        console.log(item);
 
         callback(normalizeValues(item));
     }

@@ -102,7 +102,6 @@ If you see a bug or have a suggestion, feel free to open an issue [here](https:/
 
 ## Contributions
 
-PR's are welcome! There are no strict style requirements, 
 PR's welcome! There are no strict style guidelines, just follow best practices and try to keep with the general look & feel of the code present. All submissions must pass jslint and have a test to verify *(if applicable)*.
 
 ## License

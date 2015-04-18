@@ -1,1 +1,1 @@
-module.exports = exports = require('./lib/netstat');
+module.exports = require('./lib/netstat');

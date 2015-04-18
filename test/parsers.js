@@ -12,7 +12,7 @@ describe('Parsers', function () {
             line = 'tcp        0      0 2.2.5.144:35507    1.2.3.4:80      ESTABLISHED 7777/foo';
         });
 
-        it('should parse the correct fields', function (done) {
+        it('should parse the correct fields', function () {
             linux.call(null, line, function (data) {
                 expect(data).to.deep.equal({
                     protocol: 'tcp',
@@ -29,8 +29,6 @@ describe('Parsers', function () {
                     pid: 7777
                 });
             });
-
-            done();
         });
     });
 
@@ -39,7 +37,7 @@ describe('Parsers', function () {
             line = 'TCP    2.2.5.144:1454     1.2.3.4:80        CLOSE_WAIT      7777';
         });
 
-        it('should parse the correct fields', function (done) {
+        it('should parse the correct fields', function () {
             win32.call(null, line, function (data) {
                 expect(data).to.deep.equal({
                     protocol: 'tcp',
@@ -56,8 +54,6 @@ describe('Parsers', function () {
                     pid: 7777
                 });
             });
-
-            done();
         });
     });
 });

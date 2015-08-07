@@ -50,6 +50,7 @@ var item = {
 
 #### Options
 
+- **done** - *(Function(err))* node-style callback, executed after the netstat command completed execution or encountered an error`.
 - **platform** - *(String)* overrides the platform value returned from `os.platform()`.
 - **limit** - *(Number)* limits the results read and parsed from the netstat process. Nothingness means no limit. 
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.

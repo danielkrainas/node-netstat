@@ -19,7 +19,7 @@
     "name": "Daniel Krainas",
     "email": "me@danielkrainas.com"
   },
-  "license": "MIT",
+  "license": "Unlicense",
   "devDependencies": {
     "chai": "^2.2.0",
     "grunt": "^0.4.5",

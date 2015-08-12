@@ -30,7 +30,7 @@ netstat({
 
 Executes a netstat query with any `options` supplied and executes `handler` for each line result read from netstat.
 
-The `handler` signature is `void function(object parsedItem)` where `parsedItem` represents a single result from netstat. A typical `parsedItem` will look like this:
+The `handler` signature is `void/boolean function(object parsedItem)` where `parsedItem` represents a single result from netstat. A typical `parsedItem` will look like this:
 
 ```js
 var item = {
@@ -48,9 +48,13 @@ var item = {
 };
 ```
 
+If the return value is equal to `false`, processing will stop and any remaining results will not be parsed.
+
 #### Options
 
-- **done** - *(Function(err))* node-style callback, executed after the netstat command completed execution or encountered an error`.
+- **sync** - *(Boolean)* execute the operation synchronously.
+	- Execution is asynchronous by default.
+- **done** - *(Function(Error))* node-style callback, executed after the netstat command completed execution or encountered an error`.
 - **platform** - *(String)* overrides the platform value returned from `os.platform()`.
 - **limit** - *(Number)* limits the results read and parsed from the netstat process. Nothingness means no limit. 
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.

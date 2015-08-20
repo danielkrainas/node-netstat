@@ -32,6 +32,31 @@ describe('Parsers', function () {
         });
     });
 
+    describe('darwin', function () {
+        beforeEach(function () {
+            line = 'tcp4        0      0 2.2.5.144:35507    1.2.3.4:80      ESTABLISHED';
+        });
+
+        it('should parse the correct fields', function () {
+            linux.call(null, line, function (data) {
+                expect(data).to.deep.equal({
+                    protocol: 'tcp',
+                    local: {
+                        address: '2.2.5.144',
+                        port: 35507
+                    },
+                    remote: {
+                        address: '1.2.3.4',
+                        port: 80
+                    },
+
+                    state: 'ESTABLISHED',
+                    pid: 7777
+                });
+            });
+        });
+    });
+
     describe('win32', function () {
         beforeEach(function () {
             line = 'TCP    2.2.5.144:1454     1.2.3.4:80        CLOSE_WAIT      7777';

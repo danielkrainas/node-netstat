@@ -3,6 +3,7 @@ var expect = chai.expect;
 var parsers = require('../lib/parsers');
 var win32 = parsers.win32;
 var linux = parsers.linux;
+var darwin = parsers.darwin;
 
 var line = null;
 
@@ -38,7 +39,7 @@ describe('Parsers', function () {
         });
 
         it('should parse the correct fields', function () {
-            linux.call(null, line, function (data) {
+            darwin.call(null, line, function (data) {
                 expect(data).to.deep.equal({
                     protocol: 'tcp',
                     local: {
@@ -51,7 +52,7 @@ describe('Parsers', function () {
                     },
 
                     state: 'ESTABLISHED',
-                    pid: 7777
+                    pid: 0
                 });
             });
         });

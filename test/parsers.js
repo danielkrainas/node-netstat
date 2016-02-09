@@ -35,7 +35,7 @@ describe('Parsers', function () {
 
     describe('darwin', function () {
         beforeEach(function () {
-            line = 'tcp4        0      0 2.2.5.144:35507    1.2.3.4:80      ESTABLISHED';
+            line = 'tcp4       0      0  10.59.107.171.55383    17.146.1.14.443        ESTABLISHED 262144 131400    312      0';
         });
 
         it('should parse the correct fields', function () {
@@ -43,16 +43,16 @@ describe('Parsers', function () {
                 expect(data).to.deep.equal({
                     protocol: 'tcp',
                     local: {
-                        address: '2.2.5.144',
-                        port: 35507
+                        address: '10.59.107.171',
+                        port: 55383
                     },
                     remote: {
-                        address: '1.2.3.4',
-                        port: 80
+                        address: '17.146.1.14',
+                        port: 443
                     },
 
                     state: 'ESTABLISHED',
-                    pid: 0
+                    pid: 312
                 });
             });
         });

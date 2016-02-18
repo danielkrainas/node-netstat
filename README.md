@@ -92,6 +92,9 @@ function (line, callback) {
 
 A hash map of closure factories to handle logic for certain options. See [source](https://github.com/danielkrainas/node-netstat/blob/master/lib/filters.js) for more details on implementations for specific filters.
 
+### `object netstat.utils`
+
+An object with several useful functions for implementing custom parsers.
 
 ### `string netstat.version`
 

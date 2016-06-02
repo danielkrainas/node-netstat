@@ -96,6 +96,10 @@ A hash map of closure factories to handle logic for certain options. See [source
 
 An object with several useful functions for implementing custom parsers.
 
+### `object netstat.activators`
+
+An object containing the functions for spawning the shell command. These functions are exposed so that they can be replaced if needed, but most users will not need to modify them.
+
 ### `string netstat.version`
 
 The version of node-netstat

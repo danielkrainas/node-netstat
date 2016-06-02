@@ -41,7 +41,7 @@ describe('Activators', function () {
 
             proc.stdout.emit('data', testData);
             proc.stdout.emit('end');
-            proc.emit('exit');
+            proc.emit('close');
         });
 
         it('should call done when processing is complete', function (done) {
@@ -54,7 +54,7 @@ describe('Activators', function () {
 
             proc.stdout.emit('data', testData);
             proc.stdout.emit('end');
-            proc.emit('exit');
+            proc.emit('close');
         });
 
         it('should return an error if the child process encounters one', function (done) {

@@ -1,6 +1,6 @@
 {
   "name": "node-netstat",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "programmatic netstat utility",
   "main": "index.js",
   "private": false,

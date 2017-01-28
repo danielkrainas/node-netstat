@@ -52,12 +52,13 @@ If the return value is equal to `false`, processing will stop and any remaining 
 
 #### Options
 
-- **sync** - *(Boolean)* execute the operation synchronously.
+- **sync** - *(boolean)* execute the operation synchronously.
 	- Execution is asynchronous by default.
-- **done** - *(Function(Error))* node-style callback, executed after the netstat command completed execution or encountered an error`.
-- **platform** - *(String)* overrides the platform value returned from `os.platform()`.
-- **limit** - *(Number)* limits the results read and parsed from the netstat process. Nothingness means no limit. 
+- **done** - *(function(error))* node-style callback, executed after the netstat command completed execution or encountered an error`.
+- **platform** - *(string)* overrides the platform value returned from `os.platform()`.
+- **limit** - *(number)* limits the results read and parsed from the netstat process. Nothingness means no limit. 
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.
+- **watch** - *(boolean)* repeatedly run until processing is cancelled by the line handler.
 
 
 ### `object netstat.commands`

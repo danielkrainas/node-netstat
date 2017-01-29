@@ -30,7 +30,7 @@ netstat({
 
 Executes a netstat query with any `options` supplied and executes `handler` for each line result read from netstat.
 
-The `handler` signature is `void/boolean function(object parsedItem)` where `parsedItem` represents a single result from netstat. A typical `parsedItem` will look like this:
+The `handler` signature is `void|boolean function(object parsedItem)` where `parsedItem` represents a single result from netstat. A typical `parsedItem` will look like this:
 
 ```js
 var item = {
@@ -48,7 +48,7 @@ var item = {
 };
 ```
 
-If the return value is equal to `false`, processing will stop and any remaining results will not be parsed.
+If the return value is `false`, processing will stop and any remaining results will not be parsed.
 
 #### Options
 

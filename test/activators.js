@@ -13,7 +13,11 @@ var testData = data.join('\n');
 var testData2 = data2.join('\n');
 
 var makeLineHandler = function (stopHandler) {
-    return lineHandler || function () {};
+    return function (line) {
+        if (lineHandler && lineHandler(line) === false) {
+            stopHandler();
+        }
+    };
 };
 
 function stubProc() {

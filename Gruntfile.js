@@ -14,7 +14,8 @@ module.exports = function(grunt) {
                         require: false,
                         __dirname: false,
                         exports: false,
-                        module: false
+                        module: false,
+                        setTimeout: false
                     }
                 }
             }

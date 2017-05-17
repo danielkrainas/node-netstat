@@ -1,6 +1,6 @@
 # node-netstat
 
-A library utility for reading netstat data. It's been tested on Ubuntu 14.04, Windows 7 and OS X Yosemite. 
+A library utility for reading netstat data. It's been tested on Ubuntu 14.04/16.04, Windows 7 and OS X Yosemite. 
 
 ## Installation
 

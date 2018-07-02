@@ -1,6 +1,8 @@
 var chai = require('chai');
 var expect = chai.expect;
 var sinon = require('sinon');
+var assert = require('assert');
+
 chai.use(require("sinon-chai"));
 
 var netstat = require('../lib/netstat');
@@ -32,9 +34,9 @@ describe('Netstat', function () {
             activators.async.restore();
         });
 
-	it('should return the line/lines for a particular command', function (done) {
+	it('should return an array for a particualar command', function (done) {
           netstat({
-	    watch: false,
+	    watch: true,
 	    sync: true,
 	    commands: {
 	      linux: {
@@ -42,11 +44,12 @@ describe('Netstat', function () {
 		args: '-lntu'
 	      }   
 	    },
-	    handler: function (data) {
-	      console.log(data);
+	    done: function (data) {
+	      console.log("=======");
+              console.log(data);
+	      done();
 	    }
 	  })	
-	  done(); 
 	})
 
         it('should stop when returned false by data handler', function (done) {

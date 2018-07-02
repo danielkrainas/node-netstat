@@ -30,7 +30,7 @@ describe('Netstat', function () {
 	  })	
 	})
 
-	/*it('should return an array for a particualar async command', function (done) {
+	it('should return an array for a particualar async command', function (done) {
           netstat({
 	    sync: false,
 	    commands: {
@@ -40,11 +40,11 @@ describe('Netstat', function () {
 	      }   
 	    },
 	    done: function (data) {
-	      console.log("=========", data);
-              done();	  
+              assert.equal(Array.isArray(data), true);
+	      done();
 	    }
 	  })
-	});*/ 
+	});
     })
 
     describe('processing', function () {

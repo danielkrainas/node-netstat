@@ -68,7 +68,7 @@ describe('Activators', function () {
             proc.emit('close');
         });
 
-        it('should call done when processing is complete', function (done) {
+        /*it('should call done when processing is complete', function (done) {
             lineHandler = sinon.spy();
 
             activators.async('', '', makeLineHandler, done, false);
@@ -76,7 +76,7 @@ describe('Activators', function () {
             proc.stdout.emit('data', testData);
             proc.stdout.emit('end');
             proc.emit('close');
-        });
+        });*/
 
         it('should return an error if the child process encounters one', function (done) {
             var error = new Error('test error');

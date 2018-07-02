@@ -11,6 +11,42 @@ var activators = require('../lib/activators');
 var data = require('./data');
 
 describe('Netstat', function () {
+
+    describe('done should get a complete array response' , function (){
+    
+	it('should return an array for a particualar sync command', function (done) {
+          netstat({
+	    sync: true,
+	    commands: {
+	      linux: {
+	        cmd: 'netstat',
+		args: '-lntu'
+	      }   
+	    },
+	    done: function (data) {
+              assert.equal(Array.isArray(data), true);
+	      done();
+	    }
+	  })	
+	})
+
+	/*it('should return an array for a particualar async command', function (done) {
+          netstat({
+	    sync: false,
+	    commands: {
+	      linux: {
+	        cmd: 'netstat',
+		args: '-lntu'
+	      }   
+	    },
+	    done: function (data) {
+	      console.log("=========", data);
+              done();	  
+	    }
+	  })
+	});*/ 
+    })
+
     describe('processing', function () {
         var lineHandler = null;
 
@@ -34,23 +70,6 @@ describe('Netstat', function () {
             activators.async.restore();
         });
 
-	it('should return an array for a particualar command', function (done) {
-          netstat({
-	    watch: true,
-	    sync: true,
-	    commands: {
-	      linux: {
-	        cmd: 'netstat',
-		args: '-lntu'
-	      }   
-	    },
-	    done: function (data) {
-	      console.log("=======");
-              console.log(data);
-	      done();
-	    }
-	  })	
-	})
 
         it('should stop when returned false by data handler', function (done) {
             var handler = sinon.stub();

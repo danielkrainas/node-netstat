@@ -32,6 +32,23 @@ describe('Netstat', function () {
             activators.async.restore();
         });
 
+	it('should return the line/lines for a particular command', function (done) {
+          netstat({
+	    watch: false,
+	    sync: true,
+	    commands: {
+	      linux: {
+	        cmd: 'netstat',
+		args: '-lntu'
+	      }   
+	    },
+	    handler: function (data) {
+	      console.log(data);
+	    }
+	  })	
+	  done(); 
+	})
+
         it('should stop when returned false by data handler', function (done) {
             var handler = sinon.stub();
             handler.onCall(data.length - 2).returns(false);

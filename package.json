@@ -11,6 +11,9 @@
   "scripts": {
     "test": "node node_modules/grunt-cli/bin/grunt test"
   },
+  "dependencies": {
+    "is-wsl": "^1.1.0"
+  },
   "keywords": [
     "netstat",
     "utility"

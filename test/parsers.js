@@ -53,6 +53,28 @@ describe('Parsers', function () {
                 });
             });
         });
+
+        it('should support udp', function() {
+            line = 'udp    19200      0 127.0.0.53:53           0.0.0.0:*                 7777/sshd: user';
+
+            linux.call(null, line, function (data) {
+                expect(data).to.deep.equal({
+                    protocol: 'udp',
+                    local: {
+                        address: '127.0.0.53',
+                        port: 53
+                    },
+                    remote: {
+                        address: null,
+                        port: NaN
+                    },
+
+                    state: null,
+                    pid: 7777
+                });
+            });
+
+        });
     });
 
     describe('darwin', function () {

@@ -11,7 +11,32 @@ describe('Parsers', function () {
     describe('linux', function () {
 
         beforeEach(function () {
+            linux = parsers.linux;
             line = 'tcp        0      0 2.2.5.144:35507    1.2.3.4:80      ESTABLISHED 7777/foo';
+        });
+
+        it('should allow parsing process name', function () {
+            linux = parsers.linuxFactory({
+              parseName: true,
+            });
+
+            linux.call(null, line, function (data) {
+                expect(data).to.deep.equal({
+                    protocol: 'tcp',
+                    local: {
+                        address: '2.2.5.144',
+                        port: 35507
+                    },
+                    remote: {
+                        address: '1.2.3.4',
+                        port: 80
+                    },
+
+                    state: 'ESTABLISHED',
+                    pid: 7777,
+                    processName: 'foo'
+                });
+            });
         });
 
         it('should parse the correct fields', function () {

@@ -97,17 +97,7 @@ A hash map of the factory functions used to generate the default parsers with ke
 
 ##### Options
 
-- **parseName** - *(boolean)* execute the operation synchronously.
-	- Execution is asynchronous by default.
-
-```js
-function (line, callback) {
-	// parse line contents
-	callback(parsedItem);
-}
-```
-
-`line` is a raw line of output read from netstat. `callback` is a function and accepts a single argument: the parsed data object.
+- **parseName** - *(boolean)* parse and include `processName` in results. Default: *false*
 
 #### Common Recipes
 

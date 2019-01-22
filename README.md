@@ -1,6 +1,6 @@
 # node-netstat
 
-A library utility for reading netstat data. It's been tested on Ubuntu 14.04/16.04, Windows 7 and OS X Yosemite. 
+A library utility for reading netstat data. It's been tested on Ubuntu 14.04/16.04, Windows 7 and OS X Yosemite.
 
 ## Installation
 
@@ -56,7 +56,7 @@ If the return value is `false`, processing will stop and any remaining results w
 	- Execution is asynchronous by default.
 - **done** - *(function(error))* node-style callback, executed after the netstat command completed execution or encountered an error`.
 - **platform** - *(string)* overrides the platform value returned from `os.platform()`.
-- **limit** - *(number)* limits the results read and parsed from the netstat process. Nothingness means no limit. 
+- **limit** - *(number)* limits the results read and parsed from the netstat process. Nothingness means no limit.
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.
 - **watch** - *(boolean)* repeatedly run until processing is cancelled by the line handler.
 
@@ -89,6 +89,55 @@ function (line, callback) {
 
 `line` is a raw line of output read from netstat. `callback` is a function and accepts a single argument: the parsed data object.
 
+### `object netstat.parserFactories`
+
+A hash map of the factory functions used to generate the default parsers with keys corresponding to `os.platform()` values. Some factories include options that may be customized for specific use cases.
+
+#### Linux
+
+##### Options
+
+- **parseName** - *(boolean)* execute the operation synchronously.
+	- Execution is asynchronous by default.
+
+```js
+function (line, callback) {
+	// parse line contents
+	callback(parsedItem);
+}
+```
+
+`line` is a raw line of output read from netstat. `callback` is a function and accepts a single argument: the parsed data object.
+
+#### Common Recipes
+
+##### Include the process name and allow filtering on it (linux only)
+
+```js
+const netstat = require('node-netstat');
+
+netstat.parsers.linux = netstat.parserFactories.linux({
+  parseName: true,
+});
+
+netstat({}, item => console.log(item));
+
+/* output:
+{ protocol: 'tcp',
+  local: { port: 631, address: '127.0.0.1' },
+  remote: { port: NaN, address: null },
+  state: 'LISTEN',
+  pid: 0,
+  processName: '' }
+{ protocol: 'tcp',
+  local: { port: 1339, address: '127.0.0.1' },
+  remote: { port: NaN, address: null },
+  state: 'LISTEN',
+  pid: 10474,
+  processName: 'node' }
+*/
+```
+
 ### `object netstat.filters`
 
 A hash map of closure factories to handle logic for certain options. See [source](https://github.com/danielkrainas/node-netstat/blob/master/lib/filters.js) for more details on implementations for specific filters.
@@ -103,7 +152,7 @@ The version of node-netstat
 
 ## Extensions
 
-node-netstat is highly extensible via the `filters`, `parsers`, and `commands` properties. 
+node-netstat is highly extensible via the `filters`, `parsers`, and `commands` properties.
 
 ## Bugs and Feedback
 
@@ -115,7 +164,7 @@ PR's welcome! There are no strict style guidelines, just follow best practices a
 
 ## License
 
-[Unlicense](http://unlicense.org/UNLICENSE). This is a Public Domain work. 
+[Unlicense](http://unlicense.org/UNLICENSE). This is a Public Domain work.
 
 [![Public Domain](https://licensebuttons.net/p/mark/1.0/88x31.png)](http://questioncopyright.org/promise)
 

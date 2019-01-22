@@ -1,6 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var parsers = require('../lib/parsers');
+var parserFactories = require('../lib/parser-factories');
 var win32 = parsers.win32;
 var linux = parsers.linux;
 var darwin = parsers.darwin;
@@ -16,7 +17,7 @@ describe('Parsers', function () {
         });
 
         it('should allow parsing process name', function () {
-            linux = parsers.linuxFactory({
+            linux = parserFactories.linux({
               parseName: true,
             });
 

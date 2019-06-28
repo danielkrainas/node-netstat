@@ -58,7 +58,7 @@ If the return value is `false`, processing will stop and any remaining results w
 - **platform** - *(string)* overrides the platform value returned from `os.platform()`.
 - **limit** - *(number)* limits the results read and parsed from the netstat process. Nothingness means no limit.
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.
-- **watch** - *(boolean)* repeatedly run until processing is cancelled by the line handler.
+- **watch** - *(boolean)* repeatedly run until processing is cancelled by the line handler or by the external handler.
 
 
 ### `object netstat.commands`
@@ -139,6 +139,22 @@ An object with several useful functions for implementing custom parsers.
 ### `string netstat.version`
 
 The version of node-netstat
+
+## Canceling `async` netstat externally
+
+If the `watch` option is set, the line handler can never be called. To deal with this scenario, a handler is returned and can be called to cancel netstat watching externally.
+
+```javascript
+const impossibleFilter = {...};
+let handler = netstat(impossibleFilter, item => console.log(item));
+
+...
+
+// Some time later we need to finish our script,
+// we cancel netsat so
+handler.cancel();
+```
+Any subsequent call to `handler.cancel()` takes no effect.
 
 ## Extensions
 

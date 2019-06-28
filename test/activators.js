@@ -88,6 +88,19 @@ describe('Activators', function () {
 
             proc.emit('error', error);
         });
+
+        it('should call done when canceled', function (done) {
+            var handler = activators.async('', '', makeLineHandler, done);
+            handler.cancel();
+        });
+
+        it('should take no effect when handler.cancel is called twice', function () {
+            var watchDone = sinon.spy();
+            var handler = activators.async('', '', makeLineHandler, watchDone);
+            handler.cancel();
+            handler.cancel();
+            expect(watchDone).to.have.callCount(1);
+        });
     });
 
     describe('synchronous', function () {

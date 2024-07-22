@@ -59,6 +59,7 @@ If the return value is `false`, processing will stop and any remaining results w
 - **limit** - *(number)* limits the results read and parsed from the netstat process. Nothingness means no limit.
 - **filter** - *(object)* a hash of value conditions for parsed line objects. If a key/value doesn't correspond with one(s) on a parsed object, `handler` won't get called.
 - **watch** - *(boolean)* repeatedly run until processing is cancelled by the line handler or by the external handler.
+- **processOptions** - *(object)* https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options.
 
 
 ### `object netstat.commands`

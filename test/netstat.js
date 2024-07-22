@@ -15,7 +15,7 @@ describe('Netstat', function () {
         beforeEach(function () {
             lineHandler = null;
 
-            sinon.stub(activators, 'async').callsFake(function (cmd, args, makeLineHandler, done) {
+            sinon.stub(activators, 'async').callsFake(function (cmd, args, processOptions, makeLineHandler, done) {
                 var stop = sinon.spy();
                 var handler = makeLineHandler(stop);
                 data.forEach(function (line) {
